@@ -1,0 +1,19 @@
+<package>
+  <description brief="imu_position">
+
+     imu_position
+
+  </description>
+  <author>emi</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/imu_position</url>
+	<depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="visualization_msgs"/>
+	<depend package="nav_msgs"/>
+	<depend package="sensor_msgs"/>
+<depend package="tf"/>
+</package>
+
+
