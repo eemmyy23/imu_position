@@ -13,7 +13,7 @@ void accel_rotate(float a,float b,float c,float d, float ax,float ay,float az);
 
 void chatterCallback(const sensor_msgs::Imu::ConstPtr& msg)
 {
-  //ROS_INFO("I heard: [%f]", msg->linear_acceleration.x);
+	//ROS_INFO("I heard: [%f]", msg->linear_acceleration.x);
 	//ROS_INFO("Received quaternion: (%f, %f, %f, %f)", msg->orientation.x, msg->orientation.y, msg->orientation.z, msg->orientation.w);
 
   static tf::TransformBroadcaster br;
