@@ -11,3 +11,5 @@ usage:
 ------
 rosrun imu_position imu_position_node  
 rosrun imu_position imu_position_node imu/data:=/your_imu_topic/data
+demo:
+-----
