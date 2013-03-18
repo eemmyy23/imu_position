@@ -122,11 +122,11 @@ void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 */
 //ra.z = 0;
 geometry_msgs::Vector3 ra  = msg->linear_acceleration;
-     //static tf::TransformBroadcaster br;
-     //tf::Transform transform;
-     //transform.setOrigin( tf::Vector3(ra.x, ra.y, ra.z) );
-     //transform.setRotation( tf::Quaternion(msg->orientation.x, msg->orientation.y, msg->orientation.z, msg->orientation.w) );
-     //br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/odom", "imu"));
+     static tf::TransformBroadcaster br;
+     tf::Transform transform;
+     transform.setOrigin( tf::Vector3(ra.x, ra.y, ra.z) );
+     transform.setRotation( tf::Quaternion(msg->orientation.x, msg->orientation.y, msg->orientation.z, msg->orientation.w) );
+     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/odom", "imu"));
 
 
 
@@ -138,7 +138,7 @@ geometry_msgs::Vector3 ra  = msg->linear_acceleration;
 	if (samples<0) {
  		rSpeed = true; rDist=true;
 		samples++;
-	} else if( samples>=0 && samples<maxSamples ) {
+	 		} else if( samples>=0 && samples<maxSamples ) {
 		calibrate(ra);
 		rSpeed = false; rDist=false;
 		ra.x = ra.y  = ra.z = 0;
@@ -209,7 +209,7 @@ geometry_msgs::Vector3 ra  = msg->linear_acceleration;
     //odom_pub.publish(odom);
 
     imu_position.publish(odom.pose.pose.position);
- 		imu_filtered_accel.publish(ra);
+	imu_filtered_accel.publish(ra);
 
     last_time = current_time;
 
@@ -217,20 +217,20 @@ geometry_msgs::Vector3 ra  = msg->linear_acceleration;
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "imu_position_node");
+	ros::init(argc, argv, "imu_position_node");
   
-  ros::NodeHandle n;
+	ros::NodeHandle n;
 
 	ros::Subscriber sub = n.subscribe("imu/data", 1, imuCallback);
-  ros::Subscriber restSpeed = n.subscribe("imu/resetSpeed", 1, resetSpeedCallback);
-  ros::Subscriber restPosition = n.subscribe("imu/resetPosition", 1, resetPositionCallback);
+	ros::Subscriber restSpeed = n.subscribe("imu/resetSpeed", 1, resetSpeedCallback);
+	ros::Subscriber restPosition = n.subscribe("imu/resetPosition", 1, resetPositionCallback);
 
-  ros::Subscriber thresholdMax = n.subscribe("imu/accelThresholdMax", 1, thresholdMaxCallback);
-  ros::Subscriber thresholdMin = n.subscribe("imu/accelThresholdMin", 1, thresholdMinCallback);
+	ros::Subscriber thresholdMax = n.subscribe("imu/accelThresholdMax", 1, thresholdMaxCallback);
+	ros::Subscriber thresholdMin = n.subscribe("imu/accelThresholdMin", 1, thresholdMinCallback);
 
 
 	//odom_pub = n.advertise<nav_msgs::Odometry>("odom", 1);
-  imu_position = n.advertise<geometry_msgs::Vector3>("imu/position",1);
+	imu_position = n.advertise<geometry_msgs::Vector3>("imu/position",1);
 	imu_filtered_accel = n.advertise<geometry_msgs::Vector3>("imu/filtered_accel",1);
 
  	current_time = ros::Time::now();
@@ -238,8 +238,8 @@ int main(int argc, char **argv)
 	//initialize_time = current_time + ros::Duration(1);	
 	//calibrate_time = current_time + ros::Duration(7);	
 
-  ros::spin();
-  return 0;
+	ros::spin();
+	return 0;
 }
 
 
