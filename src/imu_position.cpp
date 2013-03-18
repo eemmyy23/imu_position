@@ -29,7 +29,7 @@ if(ra.z < THRESHOLD && ra.z > -THRESHOLD) ra.z=0;
 
 }
 
-void chatterCallback(const sensor_msgs::Imu::ConstPtr& msg)
+void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 {
   //ROS_INFO("I heard: [%f]", msg->linear_acceleration.x);
 	//ROS_INFO("Received quaternion: (%f, %f, %f, %f)", msg->orientation.x, msg->orientation.y, msg->orientation.z, msg->orientation.w);
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "imu_position");
   ros::NodeHandle n;
-  ros::Subscriber sub = n.subscribe("ardrone/imu", 100, chatterCallback);
+  ros::Subscriber sub = n.subscribe("imu/data", 100, imuCallback);
   odom_pub = n.advertise<nav_msgs::Odometry>("odom", 100);
 	x = 0.0;
 	y = 0.0;
